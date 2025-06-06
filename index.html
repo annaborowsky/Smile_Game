@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Não Encontre o Leocádio</title>
     <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
@@ -19,38 +19,42 @@
             --safe-color: #2ecc71;
             --warning-color: #f39c12;
         }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--secondary-color);
+            background-image: url('https://png.pngtree.com/thumb_back/fw800/background/20200914/pngtree-halloween-bloody-scary-background-image_398559.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
-        
+
         .game-container {
             max-width: 800px;
             margin: 2rem auto;
             padding: 2.5rem;
-            background: white;
+            background-color: rgba(0, 0, 0, 0.7); /* Fundo escuro translúcido */
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            color: white; /* Texto branco para contraste */
         }
-        
+
         .game-header {
             text-align: center;
             margin-bottom: 2.5rem;
         }
-        
+
         .game-title {
-            color: var(--primary-color);
+            color: var(--danger-color);
             font-weight: 700;
             font-size: 2.5rem;
             margin-bottom: 1rem;
             position: relative;
             display: inline-block;
         }
-        
+
         .game-title:after {
             content: '';
             position: absolute;
@@ -61,21 +65,21 @@
             left: 20%;
             border-radius: 2px;
         }
-        
+
         .game-description {
-            color: #7f8c8d;
+            color: #bdc3c7;
             font-size: 1.1rem;
             max-width: 600px;
             margin: 0 auto;
         }
-        
+
         .game-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 1.5rem;
             margin: 2.5rem 0;
         }
-        
+
         .game-card {
             aspect-ratio: 1/1;
             display: flex;
@@ -92,40 +96,40 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .game-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
-        
+
         .game-card.leocadio {
             background-color: rgba(231, 76, 60, 0.1);
             border-color: var(--danger-color);
         }
-        
+
         .game-card.seguro {
             background-color: rgba(46, 204, 113, 0.1);
             border-color: var(--safe-color);
             color: var(--safe-color);
         }
-        
+
         .game-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
+
         .game-stats {
-            background-color: #f8f9fa;
+            background-color: rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             padding: 1.5rem;
             margin-bottom: 2rem;
             text-align: center;
             font-size: 1.2rem;
             font-weight: 600;
-            color: var(--primary-color);
+            color: white;
         }
-        
+
         .vida {
             color: var(--danger-color);
             font-size: 1.4rem;
@@ -133,14 +137,14 @@
             align-items: center;
             gap: 5px;
         }
-        
+
         .game-buttons {
             display: flex;
             justify-content: center;
             gap: 1rem;
             margin-top: 1.5rem;
         }
-        
+
         .game-button {
             padding: 0.8rem 1.8rem;
             font-weight: 600;
@@ -151,45 +155,45 @@
             align-items: center;
             gap: 0.5rem;
         }
-        
+
         .game-button-primary {
             background-color: var(--primary-color);
             color: white;
         }
-        
+
         .game-button-primary:hover {
             background-color: #1a252f;
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-        
+
         .game-button-danger {
             background-color: var(--danger-color);
             color: white;
         }
-        
+
         .game-button-danger:hover {
             background-color: #c0392b;
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-        
+
         .hidden {
             display: none !important;
         }
-        
+
         .visible {
             display: inline-flex !important;
         }
-        
+
         .game-footer {
             margin-top: auto;
             text-align: center;
             padding: 1.5rem;
-            color: #7f8c8d;
+            color: white;
             font-size: 0.9rem;
         }
-        
+
         .profile-image {
             width: 120px;
             height: 120px;
@@ -199,33 +203,40 @@
             margin: 1rem auto;
             display: block;
         }
-        
-        /* Efeito de pulsação quando perde vida */
+
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
-        
+
         .pulse-effect {
             animation: pulse 0.5s ease;
         }
-        
+
         @media (max-width: 768px) {
             .game-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
-            
+
             .game-container {
                 padding: 1.5rem;
                 margin: 1rem;
             }
-            
+
             .game-title {
                 font-size: 2rem;
             }
         }
-        
+
         @media (max-width: 480px) {
             .game-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -241,11 +252,11 @@
             <p class="game-description">Clique na carta segura para não perder vida! 4 cartas mostram Leocádio e apenas 1 é segura.</p>
             <img src="https://sig.ifc.edu.br/shared/verFoto?idFoto=2920941&key=597bf61badb6dcbf083a9d70c27742b2" alt="Foto do Leocádio" class="profile-image">
         </div>
-        
+
         <div class="game-stats" id="resposta">
             <span>Vidas: <span id="vida" class="vida">♥♥♥♥♥</span> | Tentativas: <span id="tentativas">0</span></span>
         </div>
-        
+
         <div class="game-grid">
             <div id="0" class="game-card" onclick="verifica(this)"></div>
             <div id="1" class="game-card" onclick="verifica(this)"></div>
@@ -253,7 +264,7 @@
             <div id="3" class="game-card" onclick="verifica(this)"></div>
             <div id="4" class="game-card" onclick="verifica(this)"></div>
         </div>
-        
+
         <div class="game-buttons">
             <button id="joganovamente" class="game-button game-button-primary visible">
                 <i class="fas fa-redo"></i> Jogar novamente
@@ -268,8 +279,6 @@
         <p>Desenvolvido com <i class="fas fa-heart" style="color: var(--danger-color);"></i> - © 2023</p>
     </footer>
 
-    <!-- Bootstrap 5 JS Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> 
     <script>
         let vida = 5;
         let tentativas = 0;
@@ -303,8 +312,7 @@
         function atualizaPlacar() {
             vidaElement.innerHTML = '♥'.repeat(vida);
             tentativasElement.textContent = tentativas;
-            
-            // Efeito visual quando perde vida
+
             if (vida < 5) {
                 vidaElement.classList.add('pulse-effect');
                 setTimeout(() => {
@@ -331,11 +339,10 @@
                 alert('Clique em "Jogar novamente"');
                 return;
             }
-            
+
             jogar = false;
             tentativas++;
 
-            // A carta segura é sempre a de id "4" (poderia ser randomizada)
             if (obj.id === "4") {
                 revelaSegura(obj);
             } else {
@@ -361,8 +368,6 @@
 
         btnJogarNovamente.addEventListener("click", jogarNovamente);
         btnReiniciar.addEventListener("click", reiniciar);
-
-        // Inicializa o placar
         atualizaPlacar();
     </script>
 </body>
