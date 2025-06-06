@@ -13,82 +13,62 @@ function reiniciar() {
   jogar = true;
   jogarNovamente();
   atualizaPlacar(0, 0);
-  btnJogarNovamente.className = "visivel";
-  btnReiniciar.className = "invisivel";
+  btnJogarNovamente.classList.add("visivel");
+  btnJogarNovamente.classList.remove("invisivel");
+  btnReiniciar.classList.add("invisivel");
+  btnReiniciar.classList.remove("visivel");
 }
 
 function jogarNovamente() {
   jogar = true;
-  let divis = document.getElementsByTagName("div");
+  document.querySelectorAll('div[id="0"], div[id="1"], div[id="2"], div[id="3"]').forEach(div => {
+    div.className = "inicial";
+    div.innerHTML = "";
+  });
 
-  for (let i = 0; i < divis.length; i++) {
-    if (["0", "1", "2", "3"].includes(divis[i].id)) {
-      divis[i].className = "inicial";
-      divis[i].innerHTML = ""; // Limpa conteúdo anterior
-    }
-  }
-
-  const imagem = document.getElementById("imagem");
-  if (imagem) imagem.remove();
-
-  const imageme = document.getElementById("imageme");
-  if (imageme) imageme.remove();
+  document.getElementById("imagem")?.remove();
+  document.getElementById("imageme")?.remove();
 }
 
 function atualizaPlacar(acertos, tentativas) {
-  desempenho = (acertos / tentativas) * 100;
-  document.getElementById("resposta").innerHTML =
-    "Placar - Acertos: " +
-    acertos +
-    " Tentativas: " +
-    tentativas +
-    " Desempenho: " +
-    Math.round(desempenho) +
-    "%";
+  desempenho = tentativas ? (acertos / tentativas) * 100 : 0;
+  document.getElementById("resposta").textContent = 
+    `Placar - Acertos: ${acertos} Tentativas: ${tentativas} Desempenho: ${Math.round(desempenho)}%`;
 }
 
-function acertou(obj) {
-  obj.className = "acertou";
+function setResultado(obj, className, imgId, imgSrc) {
+  obj.className = className;
   const img = new Image(100);
-  img.id = "imagem";
-  img.src =
-    "https://upload.wikimedia.org/wikipedia/commons/2/2e/Oxygen480-emotes-face-smile-big.svg";
+  img.id = imgId;
+  img.src = imgSrc;
   obj.appendChild(img);
 }
 
-function errou(obj) {
-  obj.className = "errou";
-  const imge = new Image(100);
-  imge.id = "imageme";
-  imge.src ="https://cdn.pixabay.com/photo/2020/02/08/00/40/emoji-4828792_1280.png";
-  obj.appendChild(imge);
-}
-
 function verifica(obj) {
-  if (jogar) {
-    jogar = false;
-    tentativas++;
+  if (!jogar) return alert('Clique em "Jogar novamente"');
+  
+  jogar = false;
+  tentativas++;
 
-    if (tentativas === 4) {
-      btnJogarNovamente.className = "invisivel";
-      btnReiniciar.className = "visivel";
-    }
-
-    let sorteado = Math.floor(Math.random() * 4);
-
-    if (obj.id == sorteado) {
-      acertou(obj);
-      acertos++;
-    } else {
-      const objSorteado = document.getElementById(sorteado);
-      acertou(objSorteado);
-      errou(obj);
-    }
-
-    atualizaPlacar(acertos, tentativas);
-  } else {
-    alert('Clique em "Jogar novamente"');
+  if (tentativas === 4) {
+    btnJogarNovamente.classList.add("invisivel");
+    btnJogarNovamente.classList.remove("visivel");
+    btnReiniciar.classList.add("visivel");
+    btnReiniciar.classList.remove("invisivel");
   }
+
+  const sorteado = Math.floor(Math.random() * 4);
+  const objSorteado = document.getElementById(sorteado);
+
+  if (obj.id == sorteado) {
+    setResultado(obj, "acertou", "imagem", "https://upload.wikimedia.org/wikipedia/commons/2/2e/Oxygen480-emotes-face-smile-big.svg");
+    acertos++;
+  } else {
+    setResultado(objSorteado, "acertou", "imagem", "https://upload.wikimedia.org/wikipedia/commons/2/2e/Oxygen480-emotes-face-smile-big.svg");
+    setResultado(obj, "errou", "imageme", "https://cdn.pixabay.com/photo/2020/02/08/00/40/emoji-4828792_1280.png");
+  }
+
+  atualizaPlacar(acertos, tentativas);
 }
 
 btnJogarNovamente.addEventListener("click", jogarNovamente);
