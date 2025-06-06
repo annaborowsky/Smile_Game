@@ -46,36 +46,43 @@ function revelaSegura(obj) {
 }
 
 function verifica(obj) {
-  if (!jogar) {
-    alert('Clique em "Jogar novamente"');
-    return;
-  }
-
-  jogar = false;
-  tentativas++;
-
-  // A carta segura é sempre a de id "4" (poderia ser randomizada)
-  if (obj.id === "4") {
-    revelaSegura(obj);
-  } else {
-    revelaLeocadio(obj);
-    vida--;
-    if (vida <= 0) {
-      setTimeout(() => {
-        alert("Game Over! Você encontrou Leocádio muitas vezes!");
-        reiniciar();
-      }, 500);
+    if (!jogar) {
+        alert('Clique em "Jogar novamente"');
+        return;
     }
-  }
+    
+    jogar = false;
+    tentativas++;
 
-  if (tentativas >= 5) {
-    btnJogarNovamente.classList.replace("visivel", "invisivel");
-    btnReiniciar.classList.replace("invisivel", "visivel");
-  }
+    // A carta segura é sempre a de id "4"
+    if (obj.id === "4") {
+        revelaSegura(obj);
+    } else {
+        revelaLeocadio(obj);
+        vida--;
+        if (vida <= 0) {
+            // Toca o som de game over
+            const gameOverSound = document.getElementById("gameOverSound");
+            gameOverSound.play().catch(e => console.log("Não foi possível tocar o áudio:", e));
+            
+            setTimeout(() => {
+                alert("Game Over! Você encontrou Leocádio muitas vezes!");
+                reiniciar();
+            }, 500);
+        }
+    }
 
-  atualizaPlacar();
+    if (tentativas >= 5) {
+        btnJogarNovamente.classList.replace("visivel", "invisivel");
+        btnReiniciar.classList.replace("invisivel", "visivel");
+        
+        // Toca o som de game over quando perde pelas 5 vezes
+        const gameOverSound = document.getElementById("gameOverSound");
+        gameOverSound.play().catch(e => console.log("Não foi possível tocar o áudio:", e));
+    }
+
+    atualizaPlacar();
 }
-
 btnJogarNovamente.addEventListener("click", jogarNovamente);
 btnReiniciar.addEventListener("click", reiniciar);
 

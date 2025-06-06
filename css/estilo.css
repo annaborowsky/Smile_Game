@@ -217,3 +217,7 @@ body {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+/* Adicione no seu CSS existente */
+audio {
+    display: none;
+}
