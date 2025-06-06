@@ -1,36 +1,219 @@
-.invisivel{
-    display:none;
+:root {
+  --primary-color: #2c3e50;
+  --secondary-color: #ecf0f1;
+  --danger-color: #e74c3c;
+  --safe-color: #2ecc71;
+  --warning-color: #f39c12;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--secondary-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.game-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.game-title {
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  position: relative;
+  display: inline-block;
+}
+
+.game-title:after {
+  content: '';
+  position: absolute;
+  width: 60%;
+  height: 4px;
+  background: var(--danger-color);
+  bottom: -10px;
+  left: 20%;
+  border-radius: 2px;
+}
+
+.game-description {
+  color: #7f8c8d;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5rem;
+  margin: 2.5rem 0;
+}
+
+.game-card {
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #f5f7fa;
+  border: 3px solid var(--primary-color);
+  color: var(--primary-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.game-card.leocadio {
+  background-color: rgba(231, 76, 60, 0.1);
+  border-color: var(--danger-color);
+}
+
+.game-card.seguro {
+  background-color: rgba(46, 204, 113, 0.1);
+  border-color: var(--safe-color);
+  color: var(--safe-color);
+}
+
+.game-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.game-stats {
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.game-stats .vida {
+  color: var(--danger-color);
+  font-size: 1.4rem;
+}
+
+.game-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.game-button {
+  padding: 0.8rem 1.8rem;
+  font-weight: 600;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.game-button-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.game-button-primary:hover {
+  background-color: #1a252f;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.game-button-danger {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.game-button-danger:hover {
+  background-color: #c0392b;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.visible {
+  display: inline-flex !important;
+}
+
+.game-footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 1.5rem;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--primary-color);
+  margin: 1rem auto;
+  display: block;
+}
+
+/* Efeito de coração batendo para a vida */
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.1); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.vida-animation {
+  animation: heartbeat 0.5s ease-in-out;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .game-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
-  .visivel{
-    display:inline;
+  
+  .game-container {
+    padding: 1.5rem;
+    margin: 1rem;
   }
-  .inicial {
-    text-align: center;
-    font-size: 100px;
-    background-color: lightgrey;
-    width: 150px;
-    height: 200px;
-    border: 15px solid green;
-    padding: 10px;
-    margin: 20px;
+  
+  .game-title {
+    font-size: 2rem;
   }
-  .acertou {
-    text-align: center;
-    color: yellow;
-    background-color: LawnGreen;
-    width: 150px;
-    height: 200px;
-    border: 15px solid yellow;
-    padding: 10px;
-    margin: 20px;
+}
+
+@media (max-width: 480px) {
+  .game-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
-  .errou {
-    text-align: center;
-    color: white;
-    background-color: red;
-    width: 150px;
-    height: 200px;
-    border: 15px solid black;
-    padding: 10px;
-    margin: 20px;
-  }
+}
