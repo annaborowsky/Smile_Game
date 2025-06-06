@@ -1,50 +1,65 @@
+// Variáveis globais
 let vida = 5;
 let tentativas = 0;
 let jogar = true;
+let cartaSeguraIndex;
 
+// Elementos do DOM
 const btnReiniciar = document.getElementById("reiniciar");
 const btnJogarNovamente = document.getElementById("joganovamente");
 
+// Sorteia posição da carta segura (0-4)
+function sortearCartaSegura() {
+    cartaSeguraIndex = Math.floor(Math.random() * 5);
+    console.log('Carta segura sorteada:', cartaSeguraIndex); // Para debug
+}
+
+// Função para reiniciar o jogo
 function reiniciar() {
-  vida = 5;
-  tentativas = 0;
-  jogar = true;
-  jogarNovamente();
-  atualizaPlacar();
-  btnJogarNovamente.classList.replace("invisivel", "visivel");
-  btnReiniciar.classList.replace("visivel", "invisivel");
+    vida = 5;
+    tentativas = 0;
+    jogar = true;
+    sortearCartaSegura();
+    jogarNovamente();
+    atualizaPlacar();
+    btnJogarNovamente.classList.replace("invisivel", "visivel");
+    btnReiniciar.classList.replace("visivel", "invisivel");
 }
 
+// Função para jogar novamente
 function jogarNovamente() {
-  jogar = true;
-  const cartas = document.querySelectorAll("#game-container > div");
-
-  cartas.forEach(carta => {
-    carta.className = "inicial";
-    carta.innerHTML = "";
-  });
+    jogar = true;
+    sortearCartaSegura();
+    document.querySelectorAll('.game-card').forEach(card => {
+        card.className = "game-card";
+        card.innerHTML = "";
+    });
 }
 
+// Atualiza o placar
 function atualizaPlacar() {
-  document.getElementById("resposta").innerHTML =
-    `Vida: ${vida} | Tentativas: ${tentativas}`;
+    document.getElementById("resposta").innerHTML = `Vida: ${vida} | Tentativas: ${tentativas}`;
 }
 
+// Revela o Leocádio
 function revelaLeocadio(obj) {
-  obj.className = "leocadio";
-  const img = new Image();
-  img.style.width = '100%';
-  img.style.height = '100%';
-  img.src = "https://sig.ifc.edu.br/shared/verFoto?idFoto=2920941&key=597bf61badb6dcbf083a9d70c27742b2";
-  img.alt = "Leocádio";
-  obj.appendChild(img);
+    obj.className = "game-card leocadio";
+    const img = new Image();
+    img.src = "https://sig.ifc.edu.br/shared/verFoto?idFoto=2920941&key=597bf61badb6dcbf083a9d70c27742b2";
+    img.alt = "Leocádio";
+    obj.appendChild(img);
 }
 
+// Revela o Asafe (carta segura)
 function revelaSegura(obj) {
-  obj.className = "seguro";
-  obj.textContent = "✓";
+    obj.className = "game-card seguro";
+    const img = new Image();
+    img.src = "https://sig.ifc.edu.br/shared/verFoto?idFoto=2451758&key=2ffed9b49f9737a174b58b3e816f5b26";
+    img.alt = "Asafe";
+    obj.appendChild(img);
 }
 
+// Função principal CORRIGIDA
 function verifica(obj) {
     if (!jogar) {
         alert('Clique em "Jogar novamente"');
@@ -54,19 +69,17 @@ function verifica(obj) {
     jogar = false;
     tentativas++;
 
-    // A carta segura é sempre a de id "4"
-    if (obj.id === "4") {
+    // VERIFICAÇÃO CORRIGIDA - compara com o índice sorteado
+    if (parseInt(obj.id) === cartaSeguraIndex) {
         revelaSegura(obj);
     } else {
         revelaLeocadio(obj);
         vida--;
+        
         if (vida <= 0) {
-            // Toca o som de game over
-            const gameOverSound = document.getElementById("gameOverSound");
-            gameOverSound.play().catch(e => console.log("Não foi possível tocar o áudio:", e));
-            
+            document.getElementById("gameOverSound").play();
             setTimeout(() => {
-                alert("Game Over! Você encontrou Leocádio muitas vezes!");
+                alert("Game Over!");
                 reiniciar();
             }, 500);
         }
@@ -75,16 +88,14 @@ function verifica(obj) {
     if (tentativas >= 5) {
         btnJogarNovamente.classList.replace("visivel", "invisivel");
         btnReiniciar.classList.replace("invisivel", "visivel");
-        
-        // Toca o som de game over quando perde pelas 5 vezes
-        const gameOverSound = document.getElementById("gameOverSound");
-        gameOverSound.play().catch(e => console.log("Não foi possível tocar o áudio:", e));
+        document.getElementById("gameOverSound").play();
     }
 
     atualizaPlacar();
 }
+
+// Inicialização do jogo
+sortearCartaSegura(); // Sorteia a primeira posição
 btnJogarNovamente.addEventListener("click", jogarNovamente);
 btnReiniciar.addEventListener("click", reiniciar);
-
-// Inicializa o placar
 atualizaPlacar();
